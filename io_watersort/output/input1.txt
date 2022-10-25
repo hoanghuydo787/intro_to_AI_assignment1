@@ -1,0 +1,180 @@
+Step 0
+---------
+Tube 1:Orange Green Blue Pink 
+Tube 2:Pink Red Orange Red 
+Tube 3:Green Green Red Blue 
+Tube 4:Green Orange Blue Pink 
+Tube 5:Orange Pink Red Blue 
+Tube 6:
+Tube 7:
+=======================
+Step 1
+---------
+Tube 1:Orange Green Blue 
+Tube 2:Pink Red Orange Red 
+Tube 3:Green Green Red Blue 
+Tube 4:Green Orange Blue Pink 
+Tube 5:Orange Pink Red Blue 
+Tube 6:Pink 
+Tube 7:
+=======================
+Step 2
+---------
+Tube 1:Orange Green Blue 
+Tube 2:Pink Red Orange Red 
+Tube 3:Green Green Red Blue 
+Tube 4:Green Orange Blue 
+Tube 5:Orange Pink Red Blue 
+Tube 6:Pink Pink 
+Tube 7:
+=======================
+Step 3
+---------
+Tube 1:Orange Green Blue Blue 
+Tube 2:Pink Red Orange Red 
+Tube 3:Green Green Red 
+Tube 4:Green Orange Blue 
+Tube 5:Orange Pink Red Blue 
+Tube 6:Pink Pink 
+Tube 7:
+=======================
+Step 4
+---------
+Tube 1:Orange Green 
+Tube 2:Pink Red Orange Red 
+Tube 3:Green Green Red 
+Tube 4:Green Orange Blue 
+Tube 5:Orange Pink Red Blue 
+Tube 6:Pink Pink 
+Tube 7:Blue Blue 
+=======================
+Step 5
+---------
+Tube 1:Orange Green 
+Tube 2:Pink Red Orange Red 
+Tube 3:Green Green Red 
+Tube 4:Green Orange Blue 
+Tube 5:Orange Pink Red 
+Tube 6:Pink Pink 
+Tube 7:Blue Blue Blue 
+=======================
+Step 6
+---------
+Tube 1:Orange Green 
+Tube 2:Pink Red Orange Red 
+Tube 3:Green Green Red 
+Tube 4:Green Orange 
+Tube 5:Orange Pink Red 
+Tube 6:Pink Pink 
+Tube 7:Blue Blue Blue Blue 
+=======================
+Step 7
+---------
+Tube 1:Orange Green 
+Tube 2:Pink Red Orange 
+Tube 3:Green Green Red Red 
+Tube 4:Green Orange 
+Tube 5:Orange Pink Red 
+Tube 6:Pink Pink 
+Tube 7:Blue Blue Blue Blue 
+=======================
+Step 8
+---------
+Tube 1:Orange Green 
+Tube 2:Pink Red Orange Orange 
+Tube 3:Green Green Red Red 
+Tube 4:Green 
+Tube 5:Orange Pink Red 
+Tube 6:Pink Pink 
+Tube 7:Blue Blue Blue Blue 
+=======================
+Step 9
+---------
+Tube 1:Orange 
+Tube 2:Pink Red Orange Orange 
+Tube 3:Green Green Red Red 
+Tube 4:Green Green 
+Tube 5:Orange Pink Red 
+Tube 6:Pink Pink 
+Tube 7:Blue Blue Blue Blue 
+=======================
+Step 10
+---------
+Tube 1:Orange Orange Orange 
+Tube 2:Pink Red 
+Tube 3:Green Green Red Red 
+Tube 4:Green Green 
+Tube 5:Orange Pink Red 
+Tube 6:Pink Pink 
+Tube 7:Blue Blue Blue Blue 
+=======================
+Step 11
+---------
+Tube 1:Orange Orange Orange 
+Tube 2:Pink Red Red Red 
+Tube 3:Green Green 
+Tube 4:Green Green 
+Tube 5:Orange Pink Red 
+Tube 6:Pink Pink 
+Tube 7:Blue Blue Blue Blue 
+=======================
+Step 12
+---------
+Tube 1:Orange Orange Orange 
+Tube 2:Pink Red Red Red 
+Tube 3:
+Tube 4:Green Green Green Green 
+Tube 5:Orange Pink Red 
+Tube 6:Pink Pink 
+Tube 7:Blue Blue Blue Blue 
+=======================
+Step 13
+---------
+Tube 1:Orange Orange Orange 
+Tube 2:Pink 
+Tube 3:Red Red Red 
+Tube 4:Green Green Green Green 
+Tube 5:Orange Pink Red 
+Tube 6:Pink Pink 
+Tube 7:Blue Blue Blue Blue 
+=======================
+Step 14
+---------
+Tube 1:Orange Orange Orange 
+Tube 2:Pink 
+Tube 3:Red Red Red Red 
+Tube 4:Green Green Green Green 
+Tube 5:Orange Pink 
+Tube 6:Pink Pink 
+Tube 7:Blue Blue Blue Blue 
+=======================
+Step 15
+---------
+Tube 1:Orange Orange Orange 
+Tube 2:Pink 
+Tube 3:Red Red Red Red 
+Tube 4:Green Green Green Green 
+Tube 5:Orange 
+Tube 6:Pink Pink Pink 
+Tube 7:Blue Blue Blue Blue 
+=======================
+Step 16
+---------
+Tube 1:Orange Orange Orange 
+Tube 2:
+Tube 3:Red Red Red Red 
+Tube 4:Green Green Green Green 
+Tube 5:Orange 
+Tube 6:Pink Pink Pink Pink 
+Tube 7:Blue Blue Blue Blue 
+=======================
+Step 17
+---------
+Tube 1:
+Tube 2:
+Tube 3:Red Red Red Red 
+Tube 4:Green Green Green Green 
+Tube 5:Orange Orange Orange Orange 
+Tube 6:Pink Pink Pink Pink 
+Tube 7:Blue Blue Blue Blue 
+=======================
