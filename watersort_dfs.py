@@ -18,7 +18,7 @@ if __name__ == "__main__":
     filename = "input1.txt"
     read_input(filename, state)
     res = dfs(state)
-    with open(os.path.join(outdir,filename), "w") as f:
+    with open(os.path.join(outdir,filename.replace("input", "output")), "w") as f:
         for i in range(len(res)):
             f.write("Step " + str(i) + "\n")
             f.write(display_state(res[i]))
