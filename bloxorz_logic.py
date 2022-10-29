@@ -85,10 +85,10 @@ class bloxorz_manage:
         if x1 == x2 and y1 == y2: # standing
             y1 -= 1
             y2 -= 2
-        elif y1 == y2: # horizontal
+        elif y1 == y2: # lying horizontal
             y1 -= 1
             y2 -= 1
-        else: #vertical
+        else: # lying vertical
             y1 = y2 = min(y1-1, y2-1)
         state = bloxorz_state(x1, y1, x2, y2, map, state)
         if self.check_valid_state(state):
