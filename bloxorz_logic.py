@@ -38,7 +38,7 @@ class bloxorz_state:
 
 class bloxorz_manage:
     def __init__(self, input):
-        self.row, self.col, map, x1, y1, x2, y2, self.button = self.read_input(input)
+        self.row, self.col, map, x1, y1, x2, y2, self.buttons = self.read_input(input)
         self.init_state = bloxorz_state(x1, y1, x2, y2, map, None)
 
     def read_input(self, filename):
@@ -59,7 +59,7 @@ class bloxorz_manage:
             # <x> <y> <type(0(openonly), 1(closeonly), 2(both))> <numOfPoint> [<xi> <yi>]
             button = []
             for line in f:
-                button.append([int(x) for x in next(f).split()])
+                button.append([int(x) for x in line.split()])
             
             return row, col, map, x1, y1, x2, y2, button
 
@@ -79,6 +79,39 @@ class bloxorz_manage:
             return True
         return False
 
+    def handle_button_O(self, state, buttonInfo):
+        # handle for 3 case: button for only open, button for only close, button for both
+        if buttonInfo[2] == 0: # button only open
+            for i in range(0, buttonInfo[3]):
+                state.map[buttonInfo[3+2*i+2]][buttonInfo[3+2*i+1]] = 1
+        elif buttonInfo[2] == 1: # button only close
+            for i in range(0, buttonInfo[3]):
+                state.map[buttonInfo[3+2*i+2]][buttonInfo[3+2*i+1]] = 0
+        else: #button for both
+            for i in range(0, buttonInfo[3]):
+                state.map[buttonInfo[3+2*i+2]][buttonInfo[3+2*i+1]] = abs(state.map[buttonInfo[3+2*i+2]][buttonInfo[3+2*i+1]] - 1)
+
+    def handle_button_X(self, state, buttonInfo):
+        # handle for 3 case: button for only open, button for only close, button for both
+        if buttonInfo[2] == 0: # button only open
+            for i in range(0, buttonInfo[3]):
+                state.map[buttonInfo[3+2*i+2]][buttonInfo[3+2*i+1]] = 1
+        elif buttonInfo[2] == 1: # button only close
+            for i in range(0, buttonInfo[3]):
+                state.map[buttonInfo[3+2*i+2]][buttonInfo[3+2*i+1]] = 0
+        else: #button for both
+            for i in range(0, buttonInfo[3]):
+                state.map[buttonInfo[3+2*i+2]][buttonInfo[3+2*i+1]] = abs(state.map[buttonInfo[3+2*i+2]][buttonInfo[3+2*i+1]] - 1)
+
+    def handle_button(self, state):
+        x1, x2, y1, y2 = state.x1, state.x2, state.y1, state.y2 
+        for i in self.buttons:
+            if (i[0], i[1]) in [(x1, y1), (x2, y2)]:
+                if (state.map[i[1]][i[0]] == 4): # 4 representation button O
+                    self.handle_button_O(state, i)
+                elif x1 == x2 and y1 == y2: # 5 representation for button X 
+                    self.handle_button_X(state, i)
+
     def move_up(self, state):
         x1, x2, y1, y2 = state.x1, state.x2, state.y1, state.y2
         map = state.map
@@ -90,9 +123,10 @@ class bloxorz_manage:
             y2 -= 1
         else: # lying vertical
             y1 = y2 = min(y1-1, y2-1)
-        state = bloxorz_state(x1, y1, x2, y2, map, state)
-        if self.check_valid_state(state):
-            return state
+        newState = bloxorz_state(x1, y1, x2, y2, map, state)
+        if self.check_valid_state(newState):
+            self.handle_button(newState)
+            return newState
         return None
 
     def move_down(self, state):
@@ -106,9 +140,10 @@ class bloxorz_manage:
             y2 += 1
         else: #vertical
             y1 = y2 = max(y1+1, y2+1)
-        state = bloxorz_state(x1, y1, x2, y2, map, state)
-        if self.check_valid_state(state):
-            return state
+        newState = bloxorz_state(x1, y1, x2, y2, map, state)
+        if self.check_valid_state(newState):
+            self.handle_button(newState)
+            return newState
         return None
 
     def move_left(self, state):
@@ -122,9 +157,10 @@ class bloxorz_manage:
         else: #vertical
             x1 -= 1
             x2 -= 1
-        state = bloxorz_state(x1, y1, x2, y2, map, state)
-        if self.check_valid_state(state):
-            return state
+        newState = bloxorz_state(x1, y1, x2, y2, map, state)
+        if self.check_valid_state(newState):
+            self.handle_button(newState)
+            return newState
         return None
 
     def move_right(self, state):
@@ -138,9 +174,10 @@ class bloxorz_manage:
         else: #vertical
             x1 += 1
             x2 += 1
-        state = bloxorz_state(x1, y1, x2, y2, map, state)
-        if self.check_valid_state(state):
-            return state
+        newState = bloxorz_state(x1, y1, x2, y2, map, state)
+        if self.check_valid_state(newState):
+            self.handle_button(newState)
+            return newState
         return None
 
 class bloxorz_dfs(bloxorz_manage):
@@ -178,7 +215,6 @@ class bloxorz_dfs(bloxorz_manage):
         self.isVisited.append(self.init_state)
         while stack:
             cur = stack.pop()
-
             if self.goal_state(cur):
                 # print result
                 with open(os.path.join(outdir,self.input.replace("input", "output")), "w") as f:
@@ -194,4 +230,3 @@ class bloxorz_dfs(bloxorz_manage):
                 move = self.get_all_next_state(cur)
                 for i in move:
                     stack.append(i)
-    
