@@ -246,6 +246,7 @@ class bloxorz_ga(bloxorz_manage):
         x1, x2, y1, y2 = state.x1, state.x2, state.y1, state.y2
         x = (x1 + x2) / 2
         y = (y1 + y2) / 2
-        return sqrt((x-x_goal)**2 + (y-y_goal)**2)
+        return sqrt((x - self.x_goal) ** 2 + (y - self.y_goal) ** 2)
     
-    
+    def generate_dna_sequence(self):
+        
