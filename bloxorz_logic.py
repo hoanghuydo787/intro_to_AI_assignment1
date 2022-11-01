@@ -237,3 +237,5 @@ class bloxorz_ga(bloxorz_manage):
         self.input = input
     
     def fitness_function(self):
+        # euclidean distance
+        
