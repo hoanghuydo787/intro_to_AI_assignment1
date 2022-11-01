@@ -235,7 +235,17 @@ class bloxorz_ga(bloxorz_manage):
     def __init__(self, input):
         bloxorz_manage.__init__(self, input)
         self.input = input
-    
+        for i in range(len(self.map)):
+            for j in range(len(self.map[i])):
+                if map[i][j] == 2:
+                    self.x_goal, self.y_goal = i, j
+        
+
     def fitness_function(self):
         # euclidean distance
-        
+        x1, x2, y1, y2 = state.x1, state.x2, state.y1, state.y2
+        x = (x1 + x2) / 2
+        y = (y1 + y2) / 2
+        return sqrt((x-x_goal)**2 + (y-y_goal)**2)
+    
+    
