@@ -18,7 +18,8 @@ RIGHT = 4
 INF = 100000
 
 indir = "io_bloxorz/input"
-outdir = "io_bloxorz/output"
+outdirDFS = "io_bloxorz/outputDFS"
+outdirGA = "io_bloxorz/outputGA"
 # this class manage state of map
 class bloxorz_state:
     def __init__(self, x1, y1, x2, y2, map, parent):
@@ -220,14 +221,14 @@ class bloxorz_bfs(bloxorz_manage):
             self.isVisited.append(right)
         return res
 
-    def BFS(self):
+    def BFS_solver(self):
         stack = [self.init_state]
         self.isVisited.append(self.init_state)
         while stack:
             cur = stack.pop()
             if self.goal_state(cur):
                 # print result
-                with open(os.path.join(outdir,self.input.replace("input", "output")), "w") as f:
+                with open(os.path.join(outdirDFS,self.input.replace("input", "output")), "w") as f:
                     states = []
                     while cur:
                         states.append(cur)
@@ -242,7 +243,7 @@ class bloxorz_bfs(bloxorz_manage):
                     stack.append(i)
 
 class bloxorz_ga(bloxorz_manage):
-    def __init__(self, input, population_size = 1000, max_move = 50, mutation_rate = 0.05):
+    def __init__(self, input, population_size = 1000, max_move = 80, mutation_rate = 0.2):
         bloxorz_manage.__init__(self, input)
         self.input = input
         self.population_size = population_size
@@ -357,7 +358,7 @@ class bloxorz_ga(bloxorz_manage):
                 break
             i += 1
         solution = self.population[i]
-        with open(os.path.join(outdir,self.input.replace("input", "output")), "w") as f:
+        with open(os.path.join(outdirGA,self.input.replace("input", "output")), "w") as f:
             states = [self.init_state]
             for i in solution:
                 if i != 0:
