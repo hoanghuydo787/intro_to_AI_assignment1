@@ -253,9 +253,10 @@ class bloxorz_ga(bloxorz_manage):
         self.rate = []
         for i in range(len(self.init_state.map)):
             for j in range(len(self.init_state.map[i])):
-                if map[i][j] == 2:
+                if self.init_state.map[i][j] == 2:
                     self.x_goal, self.y_goal = j, i
 
+    #DNA moving and return state after moving
     def moving(self, DNA):
         state = self.init_state
         for i in DNA:
@@ -280,34 +281,54 @@ class bloxorz_ga(bloxorz_manage):
         y = (y1 + y2) / 2
         return math.sqrt((x - self.x_goal) ** 2 + (y - self.y_goal) ** 2)
     
+    #calculate all state in list of gene after moving
     def fitness(self):
+        self.score = []
         for i in self.population:
             state = self.moving(i)
             self.score.append(self.fitness_function(state))
         
-        self.rate = [1 for i in self.score]
+        self.rate = [1 for i in range(len(self.score))]
 
 
     def generate_dna_sequence(self):
         self.population = []
-        for i in self.population_size:
-            self.population.append([random.randint(0, 4) for i in self.max_move])
+        for i in range(self.population_size):
+            self.population.append([random.randint(0, 4) for i in range(self.max_move)])
 
-    def mutation():
-        pass
+    def mutation(self, genes):
+        for i in range(len(genes)):
+            if self.mutation_rate > random.random():
+                genes[i][random.randint(0, self.max_move-1)] = random.randint(0, 4)
+        return genes
 
     def crossover(self):
-        parent = random.choices(self.population, weights=self.rate, k=2)
-
+        new_population = []
+        for i in range(int(self.population_size / 2)):
+            parent = random.choices(self.population, weights=self.rate, k=2)
+            point = random.randint(1, self.max_move-1)
+            child = [parent[0][0:point] + parent[1][point:],  parent[1][0:point] + parent[0][point:]]
+            new_population.extend(child)
+        
+        new_population = self.mutation(new_population)
+        self.population = new_population
 
     def get_best_fitness(self):
         return min(self.score)
 
     def GA_solver(self):
         self.generate_dna_sequence()
-        score = 10000
+        self.fitness()
+        score = self.get_best_fitness()
+        i = 1
         while score:
-            self.fitness()
+            print("Gen", i, ": ", self.population_size)
+            print("Best score: ", score)
             self.crossover()
+            self.fitness()
             score = self.get_best_fitness()
+            i += 1
+        print("==================END==================")
+        print("Gen", i, ": ", self.population_size)
+        print("Best score: ", score)
             
