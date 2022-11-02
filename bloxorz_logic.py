@@ -304,7 +304,7 @@ class bloxorz_ga(bloxorz_manage):
             state = self.moving(i)
             self.score.append(self.fitness_function(state))
         
-        self.rate = [(self.row + self.col + i) for i in range(len(self.score))]
+        self.rate = [(self.row*2 + self.col*2 + i) for i in range(len(self.score))]
 
 
     def generate_dna_sequence(self):
