@@ -242,7 +242,7 @@ class bloxorz_bfs(bloxorz_manage):
                     stack.append(i)
 
 class bloxorz_ga(bloxorz_manage):
-    def __init__(self, input, population_size = 1000, max_move = 50, mutation_rate = 0.01):
+    def __init__(self, input, population_size = 1000, max_move = 50, mutation_rate = 0.08):
         bloxorz_manage.__init__(self, input)
         self.input = input
         self.population_size = population_size
@@ -255,6 +255,16 @@ class bloxorz_ga(bloxorz_manage):
             for j in range(len(self.init_state.map[i])):
                 if self.init_state.map[i][j] == 2:
                     self.x_goal, self.y_goal = j, i
+
+    def next_state(self, state, move):
+        if move == UP:
+            return self.move_up(state)
+        elif move == DOWN:
+            return self.move_down(state)
+        elif move == LEFT:
+            return self.move_left(state)
+        elif move == RIGHT:
+            return self.move_right(state)
 
     #DNA moving and return state after moving
     def moving(self, DNA):
@@ -272,16 +282,20 @@ class bloxorz_ga(bloxorz_manage):
             if state == None:
                 return preState
             preState = state
+            if self.goal_state(state):
+                break
         return state
 
     def fitness_function(self, state):
         # euclidean distance
-        if (state == None):
-            return INF
+        '''
         x1, x2, y1, y2 = state.x1, state.x2, state.y1, state.y2
         x = (x1 + x2) / 2
         y = (y1 + y2) / 2
         return math.sqrt((x - self.x_goal) ** 2 + (y - self.y_goal) ** 2)
+        '''
+        x1, x2, y1, y2 = state.x1, state.x2, state.y1, state.y2
+        return abs(x1 - self.x_goal) + abs(x2 - self.x_goal) + abs(y1 - self.y_goal) + abs(y2 - self.y_goal)
     
     #calculate all state in list of gene after moving
     def fitness(self):
@@ -290,7 +304,7 @@ class bloxorz_ga(bloxorz_manage):
             state = self.moving(i)
             self.score.append(self.fitness_function(state))
         
-        self.rate = [1 for i in range(len(self.score))]
+        self.rate = [(self.row + self.col + i) for i in range(len(self.score))]
 
 
     def generate_dna_sequence(self):
@@ -323,7 +337,7 @@ class bloxorz_ga(bloxorz_manage):
         self.fitness()
         score = self.get_best_fitness()
         i = 1
-        while score:
+        while score != 0:
             print("Gen", i, ": ", self.population_size)
             print("Best score: ", score)
             self.crossover()
@@ -333,4 +347,21 @@ class bloxorz_ga(bloxorz_manage):
         print("==================END==================")
         print("Gen", i, ": ", self.population_size)
         print("Best score: ", score)
+        i = 0
+        while (True):
+            if self.score[i] == 0:
+                break
+            i += 1
+        solution = self.population[i]
+        with open(os.path.join(outdir,self.input.replace("input", "output")), "w") as f:
+            states = [self.init_state]
+            for i in solution:
+                if i != 0:
+                    states.append(self.next_state(states[-1], i))
+                    if self.goal_state(states[-1]):
+                        break
+            for i in range(len(states)):
+                f.write("Step " + str(i) + "\n")
+                f.write(str(states[i]))
+        
             
