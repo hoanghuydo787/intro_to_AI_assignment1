@@ -242,7 +242,7 @@ class bloxorz_bfs(bloxorz_manage):
                     stack.append(i)
 
 class bloxorz_ga(bloxorz_manage):
-    def __init__(self, input, population_size = 1000, max_move = 50, mutation_rate = 0.08):
+    def __init__(self, input, population_size = 1000, max_move = 50, mutation_rate = 0.05):
         bloxorz_manage.__init__(self, input)
         self.input = input
         self.population_size = population_size
@@ -304,7 +304,7 @@ class bloxorz_ga(bloxorz_manage):
             state = self.moving(i)
             self.score.append(self.fitness_function(state))
         
-        self.rate = [(self.row*2 + self.col*2 + i) for i in range(len(self.score))]
+        self.rate = [(self.row*2 + self.col*2 - i) for i in self.score]
 
 
     def generate_dna_sequence(self):
@@ -315,7 +315,11 @@ class bloxorz_ga(bloxorz_manage):
     def mutation(self, genes):
         for i in range(len(genes)):
             if self.mutation_rate > random.random():
-                genes[i][random.randint(0, self.max_move-1)] = random.randint(0, 4)
+                point = random.randint(0, self.max_move-1)
+                rand = random.randint(0, 4)
+                while rand == genes[i][point]:
+                    rand = random.randint(0, 4)
+                genes[i][point] = rand
         return genes
 
     def crossover(self):
