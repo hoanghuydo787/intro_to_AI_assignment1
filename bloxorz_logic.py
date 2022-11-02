@@ -1,7 +1,7 @@
 import os
 import copy
 import math
-
+import random
 '''
 hàng cột
 map
@@ -14,6 +14,8 @@ UP = 1
 DOWN = 2
 LEFT = 3
 RIGHT = 4
+
+INF = 100000
 
 indir = "io_bloxorz/input"
 outdir = "io_bloxorz/output"
@@ -246,30 +248,60 @@ class bloxorz_ga(bloxorz_manage):
         self.population_size = population_size
         self.max_move = max_move
         self.mutation_rate = mutation_rate
+        self.population = []
+        self.score = []
+        self.rate = []
         for i in range(len(self.init_state.map)):
             for j in range(len(self.init_state.map[i])):
                 if map[i][j] == 2:
                     self.x_goal, self.y_goal = j, i
 
+    def moving(self, DNA):
+        state = self.init_state
+        for i in DNA:
+            if i == UP:
+                state = self.move_up(state)
+            elif i == DOWN:
+                state = self.move_down(state)
+            elif i == LEFT:
+                state = self.move_down(state)
+            elif i == RIGHT:
+                state = self.move_right(state)
+            if state == None:
+                return None
+        return state
+
     def fitness_function(self, state):
         # euclidean distance
+        if (state == None):
+            return INF
         x1, x2, y1, y2 = state.x1, state.x2, state.y1, state.y2
         x = (x1 + x2) / 2
         y = (y1 + y2) / 2
         return math.sqrt((x - self.x_goal) ** 2 + (y - self.y_goal) ** 2)
     
     def fitness(self):
-        pass
+        for i in self.population:
+            state = self.moving(i)
+            self.score.append(self.fitness_function(state))
+        
+        self.rate = [1 for i in self.score]
+
 
     def generate_dna_sequence(self):
-        self.population = [[], [], []]
+        self.population = []
+        for i in self.population_size:
+            self.population.append([random.randint(0, 4) for i in self.max_move])
+
+    def mutation():
         pass
 
     def crossover(self):
-        pass
+        parent = random.choices(self.population, weights=self.rate, k=2)
+
 
     def get_best_fitness(self):
-        pass
+        return min(self.score)
 
     def GA_solver(self):
         self.generate_dna_sequence()
