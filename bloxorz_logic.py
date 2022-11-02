@@ -1,5 +1,6 @@
 import os
 import copy
+import math
 
 '''
 hàng cột
@@ -7,6 +8,13 @@ map
 x1 y1 x2 y2
 các hàng tiếp theo thể hiện tọa độ các nút của cầu
 '''
+# define for using in GA, gene is list of move
+DONE = 0
+UP = 1
+DOWN = 2
+LEFT = 3
+RIGHT = 4
+
 indir = "io_bloxorz/input"
 outdir = "io_bloxorz/output"
 # this class manage state of map
@@ -232,21 +240,42 @@ class bloxorz_bfs(bloxorz_manage):
                     stack.append(i)
 
 class bloxorz_ga(bloxorz_manage):
-    def __init__(self, input):
+    def __init__(self, input, population_size = 1000, max_move = 50, mutation_rate = 0.01):
         bloxorz_manage.__init__(self, input)
         self.input = input
-        for i in range(len(self.map)):
-            for j in range(len(self.map[i])):
+        self.population_size = population_size
+        self.max_move = max_move
+        self.mutation_rate = mutation_rate
+        for i in range(len(self.init_state.map)):
+            for j in range(len(self.init_state.map[i])):
                 if map[i][j] == 2:
-                    self.x_goal, self.y_goal = i, j
-        
+                    self.x_goal, self.y_goal = j, i
 
-    def fitness_function(self):
+    def fitness_function(self, state):
         # euclidean distance
         x1, x2, y1, y2 = state.x1, state.x2, state.y1, state.y2
         x = (x1 + x2) / 2
         y = (y1 + y2) / 2
-        return sqrt((x - self.x_goal) ** 2 + (y - self.y_goal) ** 2)
+        return math.sqrt((x - self.x_goal) ** 2 + (y - self.y_goal) ** 2)
     
+    def fitness(self):
+        pass
+
     def generate_dna_sequence(self):
-        
+        self.population = [[], [], []]
+        pass
+
+    def crossover(self):
+        pass
+
+    def get_best_fitness(self):
+        pass
+
+    def GA_solver(self):
+        self.generate_dna_sequence()
+        score = 10000
+        while score:
+            self.fitness()
+            self.crossover()
+            score = self.get_best_fitness()
+            
