@@ -258,18 +258,20 @@ class bloxorz_ga(bloxorz_manage):
 
     #DNA moving and return state after moving
     def moving(self, DNA):
-        state = self.init_state
+        preState = self.init_state
+        state = None
         for i in DNA:
             if i == UP:
-                state = self.move_up(state)
+                state = self.move_up(preState)
             elif i == DOWN:
-                state = self.move_down(state)
+                state = self.move_down(preState)
             elif i == LEFT:
-                state = self.move_down(state)
+                state = self.move_left(preState)
             elif i == RIGHT:
-                state = self.move_right(state)
+                state = self.move_right(preState)
             if state == None:
-                return None
+                return preState
+            preState = state
         return state
 
     def fitness_function(self, state):
