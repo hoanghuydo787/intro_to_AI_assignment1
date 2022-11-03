@@ -1,5 +1,7 @@
 import os
 import copy
+from queue import PriorityQueue
+from itertools import count
 
 MAX_ELEMENTS = 4
 
@@ -103,7 +105,7 @@ class State:
             s += "\n"
         s += '=======================\n'
         return s
-class watersort_dfs:
+class watersort_manage():
     def __init__(self,filename):
         self.filename = filename
         self.init_state = State()
@@ -112,21 +114,27 @@ class watersort_dfs:
             self.colors = set()
             for line in f: # read rest of lines
                 tube = [x for x in line.split()]
-                self.colors.add(x for x in tube)
+                for x in tube:
+                    self.colors.add(x)
                 self.init_state.addTube(tube)
             while len(self.init_state.mat) < self.numTubes:
                 self.init_state.addTube([])
+        self.steps = []
     def display_res(self):
-        steps = self.dfs()
         with open(os.path.join(outdir,self.filename.replace("input", "output")), "w") as f:
-            for i in range(len(steps)):
-                s = steps[i].display_state()
+            for i in range(len(self.steps)):
+                s = self.steps[i].display_state()
                 if s == "":
                     f.write("CANNOT SOLVE")
                     return
                 f.write("Step " + str(i) + "\n")
-                f.write(steps[i].display_state())
+                f.write(self.steps[i].display_state())
             f.write("DONE")
+
+class watersort_dfs(watersort_manage):
+    def __init__(self,filename):
+        watersort_manage.__init__(self,filename)
+        self.steps = self.dfs()
     def dfs(self):
         stack = [(self.init_state, [self.init_state])]
         while stack:
@@ -138,3 +146,64 @@ class watersort_dfs:
                 stack.append((next_element, path + [next_element]))
         path.append(State())
         return path
+class watersort_Astar(watersort_manage):
+    def __init__(self,filename):
+        watersort_manage.__init__(self,filename)
+        self.steps = self.Astar()
+    def heuristic_function(self, state):
+        scores = 0
+        bottomColors = dict()
+        for color in self.colors:
+            bottomColors[color] = 0
+        for i in range(self.numTubes):
+            for j in range(len(state.mat[i])):
+                if j == 0:
+                    bottomColors[state.mat[i][j]] += 1
+                else:
+                    if state.mat[i][j] != state.mat[i][j-1]:
+                        scores += 1
+        for color in bottomColors.keys():
+            if bottomColors[color] != 0:
+                scores += (bottomColors[color]-1)
+            else:
+                continue
+        return scores
+    def Astar(self):
+        unique = count()
+        open_list = PriorityQueue()
+        open_list.put((0 + self.heuristic_function(self.init_state), next(unique), [self.init_state, 0]))
+        parent = dict()
+        parent[self.init_state] = None
+        while open_list.empty() == False:
+            (f, unique_num ,state_and_g) = open_list.get()
+            g_next = state_and_g[1] + 1
+            if state_and_g[0].goal_state():
+                path = [state_and_g[0]]
+                parent_node = parent[state_and_g[0]]
+                while parent_node != None:
+                    path.append(parent_node)
+                    parent_node = parent[parent_node] 
+                path.reverse()
+                return path
+    
+            for next_state in state_and_g[0].next_state(self.numTubes):
+                check_node_queue = False
+                index = 0
+                for node in open_list.queue:
+                    if next_state.mat == node[2][0].mat:
+                        check_node_queue = True
+                        break
+                    index += 1
+                f = g_next + self.heuristic_function(next_state)
+                if check_node_queue == False:
+                    open_list.put((f, next(unique), [next_state, g_next]))
+                    parent[next_state] = state_and_g[0]
+                elif open_list.queue[index][0] > f:
+                    temp = PriorityQueue()
+                    for node in open_list.queue:
+                        if node[2][0].mat == next_state.mat:
+                            temp.put((f, next(unique), [next_state, g_next]))
+                        else:
+                            temp.put(node)
+                    open_list.queue =  temp
+                    parent[next_state] = state_and_g[0]
