@@ -243,12 +243,13 @@ class bloxorz_bfs(bloxorz_manage):
                     stack.append(i)
 
 class bloxorz_ga(bloxorz_manage):
-    def __init__(self, input, population_size = 1000, max_move = 80, mutation_rate = 0.2):
+    def __init__(self, input, population_size = 1000, max_move = 80, mutation_rate = 0.05, crossover_rate = 0.2):
         bloxorz_manage.__init__(self, input)
         self.input = input
         self.population_size = population_size
         self.max_move = max_move
         self.mutation_rate = mutation_rate
+        self.crossover_rate = crossover_rate
         self.population = []
         self.score = []
         self.rate = []
@@ -327,7 +328,10 @@ class bloxorz_ga(bloxorz_manage):
         new_population = []
         for i in range(int(self.population_size / 2)):
             parent = random.choices(self.population, weights=self.rate, k=2)
-            point = random.randint(1, self.max_move-1)
+            if self.crossover_rate > random.random():
+                point = random.randint(1, self.max_move-1)
+            else:
+                point = 0
             child = [parent[0][0:point] + parent[1][point:],  parent[1][0:point] + parent[0][point:]]
             new_population.extend(child)
         
