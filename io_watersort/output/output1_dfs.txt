@@ -180,5 +180,5 @@ Tube 7:Blue Blue Blue Blue
 =======================
 DONE
 --------
-Time of algorithm is 0.0019931793212890625 seconds
-Memory usage is 8,192 bytes
+Time of algorithm is 0.0019991397857666016 seconds
+Memory usage is 0 bytes

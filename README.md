@@ -1,15 +1,19 @@
 # Intro_to_AI_assignment1
 
-## Run watersort_dfs
-Edit the input filename and run the `watersort_dfs.py` file:
+## Run Watersort
+First, you need to create an input file. You can find example files in `io_watersort/input'
+Then, run the `watersort.py` file with the following syntax:
 ```
-python watersort_dfs.py
+python watersort_dfs.py <input file name> [algorithm]
 ```
-## Run watersort_Astar
-Edit the input filename and run the `watersort_Astar.py` file:
+`[algorithm]` can be:
+* dfs
+* Astar
+For example:
 ```
-python watersort_Astar.py
+python watersort_dfs.py input1.txt dfs
 ```
+The output will be created in `io_watersort/output` with the corresponding file name
 ## Run bloxorz
 Run the `bloxorz.py` file:
 ```

@@ -18,5 +18,5 @@ Tube 3:Red Red
 =======================
 CANNOT SOLVE
 --------
-Time of algorithm is 0.0019981861114501953 seconds
+Time of algorithm is 0.0010001659393310547 seconds
 Memory usage is 0 bytes
