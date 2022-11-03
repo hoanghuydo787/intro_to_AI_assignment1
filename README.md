@@ -1,7 +1,7 @@
 # Intro_to_AI_assignment1
 
 ## Run Watersort
-First, you need to create an input file. You can find example files in `io_watersort/input'.
+First, you need to create an input file. You can find example files in `io_watersort/input`.
 
 Then, run the `watersort.py` file with the following syntax:
 ```
