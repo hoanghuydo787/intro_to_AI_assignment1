@@ -120,8 +120,9 @@ class watersort_manage():
             while len(self.init_state.mat) < self.numTubes:
                 self.init_state.addTube([])
         self.steps = []
+        self.outfile = self.filename.replace('input', 'output')
     def display_res(self):
-        with open(os.path.join(outdir,self.filename.replace("input", "output")), "w") as f:
+        with open(os.path.join(outdir,self.outfile), "w") as f:
             for i in range(len(self.steps)):
                 s = self.steps[i].display_state()
                 if s == "":
@@ -135,6 +136,7 @@ class watersort_dfs(watersort_manage):
     def __init__(self,filename):
         watersort_manage.__init__(self,filename)
         self.steps = self.dfs()
+        self.outfile = self.outfile.replace('.txt', '_dfs.txt')
     def dfs(self):
         stack = [(self.init_state, [self.init_state])]
         while stack:
@@ -150,6 +152,7 @@ class watersort_Astar(watersort_manage):
     def __init__(self,filename):
         watersort_manage.__init__(self,filename)
         self.steps = self.Astar()
+        self.outfile = self.outfile.replace('.txt', '_Astar.txt')
     def heuristic_function(self, state):
         scores = 0
         bottomColors = dict()
@@ -207,3 +210,5 @@ class watersort_Astar(watersort_manage):
                             temp.put(node)
                     open_list.queue =  temp
                     parent[next_state] = state_and_g[0]
+        path = [State()]
+        return path

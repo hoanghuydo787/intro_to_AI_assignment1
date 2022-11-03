@@ -1,0 +1,4 @@
+CANNOT SOLVE
+--------
+Time of algorithm is 0.0010118484497070312 seconds
+Memory usage is 4,096 bytes

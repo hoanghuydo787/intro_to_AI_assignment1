@@ -179,3 +179,6 @@ Tube 6:Pink Pink Pink Pink
 Tube 7:Blue Blue Blue Blue 
 =======================
 DONE
+--------
+Time of algorithm is 0.002999544143676758 seconds
+Memory usage is 0 bytes
