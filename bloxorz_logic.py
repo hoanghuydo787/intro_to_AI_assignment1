@@ -243,7 +243,7 @@ class bloxorz_bfs(bloxorz_manage):
                     stack.append(i)
 
 class bloxorz_ga(bloxorz_manage):
-    def __init__(self, input, population_size = 1000, max_move = 80, mutation_rate = 0.05, crossover_rate = 0.2):
+    def __init__(self, input, population_size = 1000, max_move = 100, mutation_rate = 0.2, crossover_rate = 0.2):
         bloxorz_manage.__init__(self, input)
         self.input = input
         self.population_size = population_size
@@ -306,7 +306,7 @@ class bloxorz_ga(bloxorz_manage):
             state = self.moving(i)
             self.score.append(self.fitness_function(state))
         
-        self.rate = [(self.row*2 + self.col*2 - i) for i in self.score]
+        self.rate = [(self.row * 2 + self.col * 2 - i) for i in self.score]
 
 
     def generate_dna_sequence(self):
@@ -314,15 +314,15 @@ class bloxorz_ga(bloxorz_manage):
         for i in range(self.population_size):
             self.population.append([random.randint(0, 4) for i in range(self.max_move)])
 
-    def mutation(self, genes):
-        for i in range(len(genes)):
+    def mutation(self, population):
+        for dna in range(len(population)):
             if self.mutation_rate > random.random():
                 point = random.randint(0, self.max_move-1)
                 rand = random.randint(0, 4)
-                while rand == genes[i][point]:
+                while rand == population[dna][point]:
                     rand = random.randint(0, 4)
-                genes[i][point] = rand
-        return genes
+                population[dna][point] = rand
+        return population
 
     def crossover(self):
         new_population = []
@@ -344,14 +344,27 @@ class bloxorz_ga(bloxorz_manage):
     def GA_solver(self):
         self.generate_dna_sequence()
         self.fitness()
+        prev_score = self.get_best_fitness()
         score = self.get_best_fitness()
         i = 1
         while score != 0:
             print("Gen", i, ": ", self.population_size)
             print("Best score: ", score)
+            print("Mutation rate: ", self.mutation_rate)
+            print("Crossover rate: ", self.crossover_rate)
             self.crossover()
             self.fitness()
+            prev_score = score
             score = self.get_best_fitness()
+            if prev_score == score:
+                self.mutation_rate += 0.05
+            else:
+                self.mutation_rate = 0.2
+            if prev_score == score:
+                self.crossover_rate += 0.05
+            else:
+                self.crossover_rate = 0.2
+
             i += 1
         print("==================END==================")
         print("Gen", i, ": ", self.population_size)
