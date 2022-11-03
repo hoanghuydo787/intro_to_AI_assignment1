@@ -247,7 +247,7 @@ class bloxorz_ga(bloxorz_manage):
         bloxorz_manage.__init__(self, input)
         self.input = input
         self.population_size = population_size
-        self.max_move = max_move
+        self.max_move = min(max_move, len(self.init_state.map) * len(self.init_state.map[0]))
         self.mutation_rate = mutation_rate
         self.crossover_rate = crossover_rate
         self.population = []
@@ -344,31 +344,34 @@ class bloxorz_ga(bloxorz_manage):
     def GA_solver(self):
         self.generate_dna_sequence()
         self.fitness()
-        prev_score = self.get_best_fitness()
-        score = self.get_best_fitness()
+        prev_score = score = sum(self.score) / len(self.score)
+        best_score = self.get_best_fitness()
         i = 1
-        while score != 0:
+        while best_score != 0:
             print("Gen", i, ": ", self.population_size)
-            print("Best score: ", score)
+            print("Best score: ", best_score)
+            print("Previous average score: ", prev_score)
+            print("Current average score: ", score)
             print("Mutation rate: ", self.mutation_rate)
             print("Crossover rate: ", self.crossover_rate)
             self.crossover()
             self.fitness()
             prev_score = score
-            score = self.get_best_fitness()
+            score = sum(self.score) / len(self.score)
+            best_score = self.get_best_fitness()
             if prev_score <= score:
-                self.mutation_rate += 0.05
+                self.mutation_rate += 0.2
             else:
                 self.mutation_rate = 0.2
             if prev_score <= score:
-                self.crossover_rate += 0.05
+                self.crossover_rate += 0.2
             else:
                 self.crossover_rate = 0.2
 
             i += 1
         print("==================END==================")
         print("Gen", i, ": ", self.population_size)
-        print("Best score: ", score)
+        print("Best score: ", best_score)
         i = 0
         while (True):
             if self.score[i] == 0:
