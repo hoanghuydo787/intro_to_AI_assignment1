@@ -1,14 +1,25 @@
 import os
 import copy
-
+import math
+import random
 '''
 hàng cột
 map
 x1 y1 x2 y2
 các hàng tiếp theo thể hiện tọa độ các nút của cầu
 '''
+# define for using in GA, gene is list of move
+DONE = 0
+UP = 1
+DOWN = 2
+LEFT = 3
+RIGHT = 4
+
+INF = 100000
+
 indir = "io_bloxorz/input"
-outdir = "io_bloxorz/output"
+outdirDFS = "io_bloxorz/outputDFS"
+outdirGA = "io_bloxorz/outputGA"
 # this class manage state of map
 class bloxorz_state:
     def __init__(self, x1, y1, x2, y2, map, parent):
@@ -210,14 +221,14 @@ class bloxorz_bfs(bloxorz_manage):
             self.isVisited.append(right)
         return res
 
-    def BFS(self):
+    def BFS_solver(self):
         stack = [self.init_state]
         self.isVisited.append(self.init_state)
         while stack:
             cur = stack.pop()
             if self.goal_state(cur):
                 # print result
-                with open(os.path.join(outdir,self.input.replace("input", "output")), "w") as f:
+                with open(os.path.join(outdirDFS,self.input.replace("input", "output")), "w") as f:
                     states = []
                     while cur:
                         states.append(cur)
@@ -232,21 +243,150 @@ class bloxorz_bfs(bloxorz_manage):
                     stack.append(i)
 
 class bloxorz_ga(bloxorz_manage):
-    def __init__(self, input):
+    def __init__(self, input, population_size = 1000, max_move = 100, mutation_rate = 0.2, crossover_rate = 0.2):
         bloxorz_manage.__init__(self, input)
         self.input = input
-        for i in range(len(self.map)):
-            for j in range(len(self.map[i])):
-                if map[i][j] == 2:
-                    self.x_goal, self.y_goal = i, j
-        
+        self.population_size = population_size
+        self.max_move = min(max_move, len(self.init_state.map) * len(self.init_state.map[0]))
+        self.mutation_rate = mutation_rate
+        self.crossover_rate = crossover_rate
+        self.population = []
+        self.score = []
+        self.rate = []
+        for i in range(len(self.init_state.map)):
+            for j in range(len(self.init_state.map[i])):
+                if self.init_state.map[i][j] == 2:
+                    self.x_goal, self.y_goal = j, i
 
-    def fitness_function(self):
+    def next_state(self, state, move):
+        if move == UP:
+            return self.move_up(state)
+        elif move == DOWN:
+            return self.move_down(state)
+        elif move == LEFT:
+            return self.move_left(state)
+        elif move == RIGHT:
+            return self.move_right(state)
+
+    #DNA moving and return state after moving
+    def moving(self, DNA):
+        preState = self.init_state
+        state = None
+        for i in DNA:
+            if i == UP:
+                state = self.move_up(preState)
+            elif i == DOWN:
+                state = self.move_down(preState)
+            elif i == LEFT:
+                state = self.move_left(preState)
+            elif i == RIGHT:
+                state = self.move_right(preState)
+            if state == None:
+                return preState
+            preState = state
+            if self.goal_state(state):
+                break
+        return state
+
+    def fitness_function(self, state):
         # euclidean distance
+        '''
         x1, x2, y1, y2 = state.x1, state.x2, state.y1, state.y2
         x = (x1 + x2) / 2
         y = (y1 + y2) / 2
-        return sqrt((x - self.x_goal) ** 2 + (y - self.y_goal) ** 2)
+        return math.sqrt((x - self.x_goal) ** 2 + (y - self.y_goal) ** 2)
+        '''
+        x1, x2, y1, y2 = state.x1, state.x2, state.y1, state.y2
+        return abs(x1 - self.x_goal) + abs(x2 - self.x_goal) + abs(y1 - self.y_goal) + abs(y2 - self.y_goal)
     
-    def generate_dna_sequence(self):
+    #calculate all state in list of gene after moving
+    def fitness(self):
+        self.score = []
+        for i in self.population:
+            state = self.moving(i)
+            self.score.append(self.fitness_function(state))
         
+        self.rate = [(self.row * 2 + self.col * 2 - i) for i in self.score]
+
+
+    def generate_dna_sequence(self):
+        self.population = []
+        for i in range(self.population_size):
+            self.population.append([random.randint(0, 4) for i in range(self.max_move)])
+
+    def mutation(self, population):
+        for dna in range(len(population)):
+            if self.mutation_rate > random.random():
+                point = random.randint(0, self.max_move-1)
+                rand = random.randint(0, 4)
+                while rand == population[dna][point]:
+                    rand = random.randint(0, 4)
+                population[dna][point] = rand
+        return population
+
+    def crossover(self):
+        new_population = []
+        for i in range(int(self.population_size / 2)):
+            parent = random.choices(self.population, weights=self.rate, k=2)
+            if self.crossover_rate > random.random():
+                point = random.randint(1, self.max_move-1)
+            else:
+                point = 0
+            child = [parent[0][0:point] + parent[1][point:],  parent[1][0:point] + parent[0][point:]]
+            new_population.extend(child)
+        
+        new_population = self.mutation(new_population)
+        self.population = new_population
+
+    def get_best_fitness(self):
+        return min(self.score)
+
+    def GA_solver(self):
+        self.generate_dna_sequence()
+        self.fitness()
+        prev_score = score = sum(self.score) / len(self.score)
+        best_score = self.get_best_fitness()
+        i = 1
+        while best_score != 0:
+            print("Gen", i, ": ", self.population_size)
+            print("Best score: ", best_score)
+            print("Previous average score: ", prev_score)
+            print("Current average score: ", score)
+            print("Mutation rate: ", self.mutation_rate)
+            print("Crossover rate: ", self.crossover_rate)
+            self.crossover()
+            self.fitness()
+            prev_score = score
+            score = sum(self.score) / len(self.score)
+            best_score = self.get_best_fitness()
+            if prev_score <= score:
+                self.mutation_rate += 0.2
+            else:
+                self.mutation_rate = 0.2
+            if prev_score <= score:
+                self.crossover_rate += 0.2
+            else:
+                self.crossover_rate = 0.2
+
+            i += 1
+        print("==================END==================")
+        print("Gen", i, ": ", self.population_size)
+        print("Best score: ", best_score)
+        i = 0
+        while (True):
+            if self.score[i] == 0:
+                break
+            i += 1
+        solution = self.population[i]
+        with open(os.path.join(outdirGA,self.input.replace("input", "output")), "w") as f:
+            states = [self.init_state]
+            for i in solution:
+                if i != 0:
+                    states.append(self.next_state(states[-1], i))
+                    if self.goal_state(states[-1]):
+                        break
+            for i in range(len(states)):
+                f.write("Step " + str(i) + "\n")
+                f.write(str(states[i]))
+        
+            

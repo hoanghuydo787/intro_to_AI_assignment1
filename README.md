@@ -13,5 +13,9 @@ python watersort_Astar.py
 ## Run bloxorz
 Run the `bloxorz.py` file:
 ```
-python bloxorz.py
+python bloxorz.py <Number of file> <solver>
+```
+Example
+```
+python bloxorz.py 1 GA
 ```
