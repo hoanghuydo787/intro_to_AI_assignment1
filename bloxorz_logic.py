@@ -239,14 +239,19 @@ class bloxorz_ga(bloxorz_manage):
             for j in range(len(self.map[i])):
                 if map[i][j] == 2:
                     self.x_goal, self.y_goal = i, j
-        
+        self.dna_length = len(self.map) * len(self.map[0])
 
-    def fitness_function(self):
+    def distance_to_goal(self):
         # euclidean distance
         x1, x2, y1, y2 = state.x1, state.x2, state.y1, state.y2
         x = (x1 + x2) / 2
         y = (y1 + y2) / 2
         return sqrt((x - self.x_goal) ** 2 + (y - self.y_goal) ** 2)
     
+    def fitness_score(self):
+        return 1 / distance_to_goal()
+
     def generate_dna_sequence(self):
-        
+        # dna sequence length is 2x total size of the map
+        # if dna sequence leads to goal in any of its chromosome, stop the algorithm
+        # chromosome of dna has 4 values(1,2,3,4), associate with 4 moves(up, down, left, right), respectively
