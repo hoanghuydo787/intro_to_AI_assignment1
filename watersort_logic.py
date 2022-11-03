@@ -93,6 +93,19 @@ class State:
             if (type_tube == 2) or (type_tube == 0):
                 return False
         return True
+    def getMoves(self, prev_state):
+        s = ""
+        src, des = 0, 0
+        for i in range(len(self.mat)):
+            if self.mat[i] != prev_state.mat[i]:
+                if (len(self.mat[i]) < len(prev_state.mat[i])):
+                    src = i
+                else:
+                    des = i
+            else:
+                continue
+        s = "Pour from Tube " + str(src+1) + " to Tube " + str(des+1)
+        return s
     def display_state(self):
         s = "---------\n"
         n = len(self.mat)
@@ -128,7 +141,10 @@ class watersort_manage():
                 if s == "":
                     f.write("CANNOT SOLVE")
                     return
-                f.write("Step " + str(i) + "\n")
+                if i != 0:
+                    f.write("Step " + str(i) + ": " + self.steps[i].getMoves(self.steps[i-1]) + "\n")
+                else:
+                    f.write("Initial State\n")
                 f.write(self.steps[i].display_state())
             f.write("DONE")
 

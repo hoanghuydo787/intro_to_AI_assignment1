@@ -1,16 +1,16 @@
-Step 0
+Initial State
 ---------
 Tube 1:Red Blue Blue Red 
 Tube 2:Red Blue Blue Red 
 Tube 3:
 =======================
-Step 1
+Step 1: Pour from Tube 2 to Tube 3
 ---------
 Tube 1:Red Blue Blue Red 
 Tube 2:Red Blue Blue 
 Tube 3:Red 
 =======================
-Step 2
+Step 2: Pour from Tube 1 to Tube 3
 ---------
 Tube 1:Red Blue Blue 
 Tube 2:Red Blue Blue 
@@ -18,5 +18,5 @@ Tube 3:Red Red
 =======================
 CANNOT SOLVE
 --------
-Time of algorithm is 0.0009255409240722656 seconds
+Time of algorithm is 0.0019981861114501953 seconds
 Memory usage is 0 bytes

@@ -1,4 +1,4 @@
-Step 0
+Initial State
 ---------
 Tube 1:Orange Green Blue Pink 
 Tube 2:Pink Red Orange Red 
@@ -8,7 +8,7 @@ Tube 5:Orange Pink Red Blue
 Tube 6:
 Tube 7:
 =======================
-Step 1
+Step 1: Pour from Tube 1 to Tube 6
 ---------
 Tube 1:Orange Green Blue 
 Tube 2:Pink Red Orange Red 
@@ -18,7 +18,7 @@ Tube 5:Orange Pink Red Blue
 Tube 6:Pink 
 Tube 7:
 =======================
-Step 2
+Step 2: Pour from Tube 4 to Tube 6
 ---------
 Tube 1:Orange Green Blue 
 Tube 2:Pink Red Orange Red 
@@ -28,7 +28,7 @@ Tube 5:Orange Pink Red Blue
 Tube 6:Pink Pink 
 Tube 7:
 =======================
-Step 3
+Step 3: Pour from Tube 3 to Tube 1
 ---------
 Tube 1:Orange Green Blue Blue 
 Tube 2:Pink Red Orange Red 
@@ -38,7 +38,7 @@ Tube 5:Orange Pink Red Blue
 Tube 6:Pink Pink 
 Tube 7:
 =======================
-Step 4
+Step 4: Pour from Tube 1 to Tube 7
 ---------
 Tube 1:Orange Green 
 Tube 2:Pink Red Orange Red 
@@ -48,7 +48,7 @@ Tube 5:Orange Pink Red Blue
 Tube 6:Pink Pink 
 Tube 7:Blue Blue 
 =======================
-Step 5
+Step 5: Pour from Tube 5 to Tube 7
 ---------
 Tube 1:Orange Green 
 Tube 2:Pink Red Orange Red 
@@ -58,7 +58,7 @@ Tube 5:Orange Pink Red
 Tube 6:Pink Pink 
 Tube 7:Blue Blue Blue 
 =======================
-Step 6
+Step 6: Pour from Tube 4 to Tube 7
 ---------
 Tube 1:Orange Green 
 Tube 2:Pink Red Orange Red 
@@ -68,7 +68,7 @@ Tube 5:Orange Pink Red
 Tube 6:Pink Pink 
 Tube 7:Blue Blue Blue Blue 
 =======================
-Step 7
+Step 7: Pour from Tube 2 to Tube 3
 ---------
 Tube 1:Orange Green 
 Tube 2:Pink Red Orange 
@@ -78,7 +78,7 @@ Tube 5:Orange Pink Red
 Tube 6:Pink Pink 
 Tube 7:Blue Blue Blue Blue 
 =======================
-Step 8
+Step 8: Pour from Tube 4 to Tube 2
 ---------
 Tube 1:Orange Green 
 Tube 2:Pink Red Orange Orange 
@@ -88,7 +88,7 @@ Tube 5:Orange Pink Red
 Tube 6:Pink Pink 
 Tube 7:Blue Blue Blue Blue 
 =======================
-Step 9
+Step 9: Pour from Tube 1 to Tube 4
 ---------
 Tube 1:Orange 
 Tube 2:Pink Red Orange Orange 
@@ -98,7 +98,7 @@ Tube 5:Orange Pink Red
 Tube 6:Pink Pink 
 Tube 7:Blue Blue Blue Blue 
 =======================
-Step 10
+Step 10: Pour from Tube 2 to Tube 1
 ---------
 Tube 1:Orange Orange Orange 
 Tube 2:Pink Red 
@@ -108,7 +108,7 @@ Tube 5:Orange Pink Red
 Tube 6:Pink Pink 
 Tube 7:Blue Blue Blue Blue 
 =======================
-Step 11
+Step 11: Pour from Tube 3 to Tube 2
 ---------
 Tube 1:Orange Orange Orange 
 Tube 2:Pink Red Red Red 
@@ -118,7 +118,7 @@ Tube 5:Orange Pink Red
 Tube 6:Pink Pink 
 Tube 7:Blue Blue Blue Blue 
 =======================
-Step 12
+Step 12: Pour from Tube 3 to Tube 4
 ---------
 Tube 1:Orange Orange Orange 
 Tube 2:Pink Red Red Red 
@@ -128,7 +128,7 @@ Tube 5:Orange Pink Red
 Tube 6:Pink Pink 
 Tube 7:Blue Blue Blue Blue 
 =======================
-Step 13
+Step 13: Pour from Tube 2 to Tube 3
 ---------
 Tube 1:Orange Orange Orange 
 Tube 2:Pink 
@@ -138,7 +138,7 @@ Tube 5:Orange Pink Red
 Tube 6:Pink Pink 
 Tube 7:Blue Blue Blue Blue 
 =======================
-Step 14
+Step 14: Pour from Tube 5 to Tube 3
 ---------
 Tube 1:Orange Orange Orange 
 Tube 2:Pink 
@@ -148,7 +148,7 @@ Tube 5:Orange Pink
 Tube 6:Pink Pink 
 Tube 7:Blue Blue Blue Blue 
 =======================
-Step 15
+Step 15: Pour from Tube 5 to Tube 6
 ---------
 Tube 1:Orange Orange Orange 
 Tube 2:Pink 
@@ -158,7 +158,7 @@ Tube 5:Orange
 Tube 6:Pink Pink Pink 
 Tube 7:Blue Blue Blue Blue 
 =======================
-Step 16
+Step 16: Pour from Tube 2 to Tube 6
 ---------
 Tube 1:Orange Orange Orange 
 Tube 2:
@@ -168,7 +168,7 @@ Tube 5:Orange
 Tube 6:Pink Pink Pink Pink 
 Tube 7:Blue Blue Blue Blue 
 =======================
-Step 17
+Step 17: Pour from Tube 1 to Tube 5
 ---------
 Tube 1:
 Tube 2:
@@ -180,5 +180,5 @@ Tube 7:Blue Blue Blue Blue
 =======================
 DONE
 --------
-Time of algorithm is 0.002999544143676758 seconds
-Memory usage is 0 bytes
+Time of algorithm is 0.0019931793212890625 seconds
+Memory usage is 8,192 bytes

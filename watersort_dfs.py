@@ -9,7 +9,7 @@ start_time = time.time()
 
 mem_before = psutil.Process(os.getpid()).memory_info().rss
 #Choose the input file
-test = watersort_dfs("input1.txt")
+test = watersort_dfs("input2.txt")
 mem_after = psutil.Process(os.getpid()).memory_info().rss
 
 test.display_res()
