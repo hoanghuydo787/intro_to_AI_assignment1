@@ -356,11 +356,11 @@ class bloxorz_ga(bloxorz_manage):
             self.fitness()
             prev_score = score
             score = self.get_best_fitness()
-            if prev_score == score:
+            if prev_score <= score:
                 self.mutation_rate += 0.05
             else:
                 self.mutation_rate = 0.2
-            if prev_score == score:
+            if prev_score <= score:
                 self.crossover_rate += 0.05
             else:
                 self.crossover_rate = 0.2
