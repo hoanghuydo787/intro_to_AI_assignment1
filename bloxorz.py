@@ -1,3 +1,4 @@
+import os
 from sys import argv
 from bloxorz_logic import bloxorz_bfs, bloxorz_ga
 import time
@@ -20,5 +21,5 @@ elif solver == 'GA':
 end_time = time.time()
 mem_after = psutil.Process(os.getpid()).memory_info().rss
 
-print("Time elapsed: ", start_time - end_time, "seconds")
+print("Time elapsed: ", end_time - start_time, "seconds")
 print("Memory usage: ", mem_after - mem_before, "MB")
