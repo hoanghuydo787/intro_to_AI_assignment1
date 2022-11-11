@@ -85,7 +85,7 @@ class bloxorz_manage:
         if min(x1, x2) >= 0 and min(y1, y2) >= 0 and max(x1, x2) < len(map[0]) and max(y1, y2) < len(map):
             if state.map[y1][x1] == 0 or state.map[y2][x2] == 0: 
                 return False
-            elif x1 == x2 and y1 == y2 and state.map[y1][x1] == 3: #check for red point
+            elif x1 == x2 and y1 == y2 and state.map[y1][x1] == 3: #check for orange point(weak tile)
                 return False
             return True
         return False
@@ -243,7 +243,7 @@ class bloxorz_bfs(bloxorz_manage):
                     stack.append(i)
 
 class bloxorz_ga(bloxorz_manage):
-    def __init__(self, input, population_size = 1000, max_move = 100, mutation_rate = 0.2, crossover_rate = 0.2):
+    def __init__(self, input, population_size = 1000, max_move = 100, mutation_rate = 0.05, crossover_rate = 0.01):
         bloxorz_manage.__init__(self, input)
         self.input = input
         self.population_size = population_size
@@ -360,13 +360,9 @@ class bloxorz_ga(bloxorz_manage):
             score = sum(self.score) / len(self.score)
             best_score = self.get_best_fitness()
             if prev_score <= score:
-                self.mutation_rate += 0.2
+                self.mutation_rate += 0.05
             else:
-                self.mutation_rate = 0.2
-            if prev_score <= score:
-                self.crossover_rate += 0.2
-            else:
-                self.crossover_rate = 0.2
+                self.mutation_rate = 0.05
 
             i += 1
         print("==================END==================")

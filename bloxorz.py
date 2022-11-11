@@ -22,4 +22,4 @@ end_time = time.time()
 mem_after = psutil.Process(os.getpid()).memory_info().rss
 
 print("Time elapsed: ", end_time - start_time, "seconds")
-print("Memory usage: ", mem_after - mem_before, "MB")
+print("Memory usage: ", (mem_after - mem_before) / (1024 * 1024), "MBs")
