@@ -191,7 +191,7 @@ class bloxorz_manage:
             return newState
         return None
 
-class bloxorz_bfs(bloxorz_manage):
+class bloxorz_dfs(bloxorz_manage):
     def __init__(self, input):
         bloxorz_manage.__init__(self, input)
         self.isVisited = []
@@ -221,7 +221,7 @@ class bloxorz_bfs(bloxorz_manage):
             self.isVisited.append(right)
         return res
 
-    def BFS_solver(self):
+    def DFS_solver(self):
         stack = [self.init_state]
         self.isVisited.append(self.init_state)
         while stack:

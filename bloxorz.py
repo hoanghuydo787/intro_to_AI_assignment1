@@ -1,6 +1,6 @@
 import os
 from sys import argv
-from bloxorz_logic import bloxorz_bfs, bloxorz_ga
+from bloxorz_logic import bloxorz_dfs, bloxorz_ga
 import time
 import psutil
 '''
@@ -12,8 +12,8 @@ start_time = time.time()
 mem_before = psutil.Process(os.getpid()).memory_info().rss
 
 if solver == 'DFS':
-    test = bloxorz_bfs('input{}.txt'.format(input))
-    test.BFS_solver()
+    test = bloxorz_dfs('input{}.txt'.format(input))
+    test.DFS_solver()
 elif solver == 'GA':
     test = bloxorz_ga('input{}.txt'.format(input))
     test.GA_solver()  
