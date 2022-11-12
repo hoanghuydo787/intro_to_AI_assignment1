@@ -1,5 +1,8 @@
 # Intro_to_AI_assignment1
-
+## Install library
+```
+pip install -r requirement.txt
+```
 ## Run Watersort
 First, you need to create an input file. You can find example files in `io_watersort/input`.
 
