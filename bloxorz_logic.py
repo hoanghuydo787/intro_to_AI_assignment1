@@ -243,7 +243,7 @@ class bloxorz_dfs(bloxorz_manage):
                     stack.append(i)
 
 class bloxorz_ga(bloxorz_manage):
-    def __init__(self, input, population_size = 1000, max_move = 100, mutation_rate = 0.05, crossover_rate = 0.01):
+    def __init__(self, input, population_size = 1000, max_move = 200, mutation_rate = 0.05, crossover_rate = 0.01):
         bloxorz_manage.__init__(self, input)
         self.input = input
         self.population_size = population_size
@@ -298,7 +298,7 @@ class bloxorz_ga(bloxorz_manage):
         '''
         x1, x2, y1, y2 = state.x1, state.x2, state.y1, state.y2
         return abs(x1 - self.x_goal) + abs(x2 - self.x_goal) + abs(y1 - self.y_goal) + abs(y2 - self.y_goal)
-    
+
     #calculate all state in list of gene after moving
     def fitness(self):
         self.score = []
