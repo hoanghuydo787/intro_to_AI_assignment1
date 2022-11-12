@@ -33,6 +33,7 @@ python bloxorz.py <Number of file> <solver>
 * 1
 * 2
 * ...
+
 Example
 ```
 python bloxorz.py 1 GA
