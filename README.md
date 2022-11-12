@@ -24,7 +24,15 @@ Run the `bloxorz.py` file:
 ```
 python bloxorz.py <Number of file> <solver>
 ```
+`<solver>` can be:
+* DFS
+* GA
+`<Number of file>` can be:
+* 1
+* 2
+* ...
 Example
 ```
 python bloxorz.py 1 GA
 ```
+The output will be created in `io_bloxorz/output` with the corresponding file name
