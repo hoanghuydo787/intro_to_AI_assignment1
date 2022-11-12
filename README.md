@@ -27,6 +27,8 @@ python bloxorz.py <Number of file> <solver>
 `<solver>` can be:
 * DFS
 * GA
+
+
 `<Number of file>` can be:
 * 1
 * 2
